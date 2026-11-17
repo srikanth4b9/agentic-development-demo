@@ -67,6 +67,10 @@ p {
   justify-content: space-between;
 }
 
+.row--end {
+  justify-content: flex-end;
+}
+
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
