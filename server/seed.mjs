@@ -135,13 +135,7 @@ const rows = [
     'resolved',
     'Meera J.',
   ],
-  [
-    'Search ignores accents',
-    'Searching "Jose" does not find "José".',
-    'low',
-    'open',
-    'Rafael O.',
-  ],
+  ['Search ignores accents', 'Searching "Jose" does not find "José".', 'low', 'open', 'Rafael O.'],
   [
     'Audit log missing exports',
     'Data exports are not recorded in the audit log.',
