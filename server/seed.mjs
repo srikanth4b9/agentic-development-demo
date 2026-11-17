@@ -139,7 +139,7 @@ const rows = [
     'Search ignores accents',
     'Searching "Jose" does not find "José".',
     'low',
-    'resolved',
+    'open',
     'Rafael O.',
   ],
   [
