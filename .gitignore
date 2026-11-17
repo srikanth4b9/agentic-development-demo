@@ -1,0 +1,9 @@
+node_modules
+dist
+playwright-report
+test-results
+.claude/worktrees/
+.claude/settings.local.json
+.env
+.env.local
+*.log
