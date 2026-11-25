@@ -1,0 +1,75 @@
+import { test, expect, type Page } from '@playwright/test';
+
+// Captures PR evidence: one full-page screenshot per UI state, saved to docs/evidence/.
+// Run: npx playwright test evidence --headed
+// Dialog shots use the viewport only, because a modal overlay covers just the visible area.
+const shot = (page: Page, name: string, fullPage = true) =>
+  page.screenshot({ path: `docs/evidence/${name}.png`, fullPage });
+
+// Open the dashboard and wait until all seeded requests are on screen.
+const openDashboard = async (page: Page) => {
+  await page.goto('/support-requests');
+  await expect(
+    page.getByRole('list', { name: 'Support requests' }).getByRole('article'),
+  ).toHaveCount(24);
+};
+
+test.beforeEach(async ({ request }) => {
+  await request.post('/api/__mock', { data: { mode: 'normal' } });
+  await request.post('/api/__reset');
+});
+
+test.afterEach(async ({ request }) => {
+  await request.post('/api/__mock', { data: { mode: 'normal' } });
+  await request.post('/api/__reset');
+});
+
+test('01 dashboard with seeded requests', async ({ page }) => {
+  await openDashboard(page);
+  await shot(page, '01-dashboard');
+});
+
+test('02 new request dialog', async ({ page }) => {
+  await openDashboard(page);
+  await page.getByRole('button', { name: 'New Request' }).click();
+  await expect(page.getByRole('dialog', { name: 'New support request' })).toBeVisible();
+  await shot(page, '02-new-request-dialog', false);
+});
+
+test('03 validation errors', async ({ page }) => {
+  await openDashboard(page);
+  await page.getByRole('button', { name: 'New Request' }).click();
+  await page.getByLabel('Title').fill('Bug');
+  await page.getByRole('button', { name: 'Submit Request' }).click();
+  const dialog = page.getByRole('dialog', { name: 'New support request' });
+  await expect(dialog.getByText('Title must be between 5 and 120 characters.')).toBeVisible();
+  await expect(dialog.getByText('Description is required.')).toBeVisible();
+  await shot(page, '03-validation-errors', false);
+});
+
+test('04 filtered empty state', async ({ page }) => {
+  await openDashboard(page);
+  await page.getByLabel('Search requests').fill('zzz-no-match');
+  await expect(page.getByText('No requests match your filters')).toBeVisible();
+  await shot(page, '04-filtered-empty');
+});
+
+test('05 error state', async ({ page, request }) => {
+  await request.post('/api/__mock', { data: { mode: 'error' } });
+  await page.goto('/support-requests');
+  await expect(page.getByText('Could not load support requests')).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByRole('button', { name: 'Try again' })).toBeVisible();
+  await shot(page, '05-error-state');
+});
+
+test('06 request created', async ({ page }) => {
+  await openDashboard(page);
+  await page.getByRole('button', { name: 'New Request' }).click();
+  await page.getByLabel('Title').fill('Export fails on Safari');
+  await page.getByLabel('Description').fill('The export button does not download the report.');
+  await page.getByRole('button', { name: 'Submit Request' }).click();
+  await expect(page.getByRole('dialog')).toBeHidden();
+  await expect(page.getByRole('heading', { name: 'Export fails on Safari' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Request summary' })).toContainText('25');
+  await shot(page, '06-request-created');
+});

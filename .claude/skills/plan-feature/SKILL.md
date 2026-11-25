@@ -13,3 +13,7 @@ Then use Superpowers writing-plans to create a task-by-task plan. For every task
 objective, acceptance criteria, expected files, dependencies, tests, commands and done
 criteria. Mark only independent tasks as parallel.
 Do not begin implementation until approved.
+
+When the plan is approved, save it to `docs/plans/support-request-dashboard.plan.md`. If the
+current branch is not `main`, commit it (`docs: implementation plan for the support request
+dashboard`). Then suggest `/figma-map`.
