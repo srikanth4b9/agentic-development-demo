@@ -20,5 +20,7 @@ from the requirement before anyone writes code.
 5. When the user says "done" (or all branches are resolved), write the final acceptance
    criteria as Given/When/Then statements to
    `docs/requirements/support-request-dashboard.acceptance.md`.
+6. If the current branch is not `main`, commit that file:
+   `docs: acceptance criteria for the support request dashboard`. Then suggest `/plan-feature`.
 
 Do not implement code.

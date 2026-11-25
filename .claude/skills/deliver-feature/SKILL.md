@@ -18,7 +18,8 @@ Use the installed Superpowers workflows to:
 6. Integrate and verify completed work.
 7. Run an independent code-review subagent (`/evidence-review`).
 8. Summarize changes and test evidence.
-9. Prepare a draft PR for human review.
+9. Stop before pushing or opening a PR. Tell the user to run `/e2e-headed`,
+   `/capture-evidence` and then `/draft-pr`.
 
 Stop for approval at key decisions.
 Do not claim success until checks pass. Do not merge into `main`.
