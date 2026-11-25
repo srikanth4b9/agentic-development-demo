@@ -1,10 +1,10 @@
 import { test, expect, type Page } from '@playwright/test';
 
-// Captures PR evidence: one full-page screenshot per UI state, saved to docs/evidence/.
-// Run: npx playwright test evidence --headed
+// Captures PR evidence: one full-page screenshot per UI state, saved to docs/evidence/support-requests/.
+// Run: npx playwright test support-requests.evidence --headed
 // Dialog shots use the viewport only, because a modal overlay covers just the visible area.
 const shot = (page: Page, name: string, fullPage = true) =>
-  page.screenshot({ path: `docs/evidence/${name}.png`, fullPage });
+  page.screenshot({ path: `docs/evidence/support-requests/${name}.png`, fullPage });
 
 // Open the dashboard and wait until all seeded requests are on screen.
 const openDashboard = async (page: Page) => {

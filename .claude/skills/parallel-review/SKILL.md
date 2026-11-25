@@ -1,11 +1,12 @@
 ---
 name: parallel-review
-description: Launch three independent read-only review subagents (architecture, accessibility, testing) in parallel and merge their findings into one severity-ranked report. Use when asked for a parallel or multi-angle review.
-argument-hint: '[path or feature, defaults to src/features/support-requests]'
+description: Use when asked for a parallel, multi-angle or thorough review — architecture, accessibility and testing reviewed independently and merged into one report.
+argument-hint: '[path or feature, defaults to the current feature]'
 ---
 
 Launch three independent read-only investigations of: $ARGUMENTS
-(If no scope is given, use `src/features/support-requests`.)
+(If no scope is given, use `src/features/<feature>` for the current feature branch, see
+`.claude/rules/feature-workflow.md`, falling back to `src/features/support-requests`.)
 
 Agent A — Architecture Review:
 Find duplicated logic and incorrect boundaries.
