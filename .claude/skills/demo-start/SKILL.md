@@ -1,13 +1,13 @@
 ---
 name: demo-start
-description: Start a live demo run from the clean baseline — reset main to the demo-baseline tag, create the demo feature branch and prepare the mock API. Typed only.
-argument-hint: '[branch name, defaults to feat/support-dashboard]'
+description: Use when starting a live demo run or rehearsal of the Support Request Dashboard from the clean baseline (main = demo-baseline). Demo only; for real work use /start-feature. Typed only.
+argument-hint: '[branch name, defaults to feat/support-requests]'
 disable-model-invocation: true
 ---
 
 Prepare a clean starting point for the live demo.
 
-Branch: $ARGUMENTS (if empty, use `feat/support-dashboard`).
+Branch: $ARGUMENTS (if empty, use `feat/support-requests`).
 
 ## 1. Protect existing work (stop if it fails)
 
@@ -15,14 +15,16 @@ Branch: $ARGUMENTS (if empty, use `feat/support-dashboard`).
 - If there are uncommitted or untracked changes, list them and stop. Ask whether to stash them
   (`git stash -u -m "pre-demo wip"`) or keep them. Never discard work without a yes.
 - Run `git tag --list demo-baseline`. If the tag is missing, stop and say so.
+- `main` and `demo-baseline` must be the same commit: compare `git rev-parse main` with
+  `git rev-parse demo-baseline`. If they differ, stop, show `git log --oneline demo-baseline..main`
+  and `git log --oneline main..demo-baseline`, and let the user decide. Never reset `main`.
 - If the demo branch already exists locally (`git branch --list <branch>`), stop and tell the
   user to run `/demo-reset` first.
 
-## 2. Reset and branch
+## 2. Branch from main
 
 ```bash
 git switch main
-git reset --hard demo-baseline
 git switch -c <branch>
 ```
 

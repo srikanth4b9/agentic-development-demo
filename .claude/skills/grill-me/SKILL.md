@@ -1,12 +1,16 @@
 ---
 name: grill-me
-description: Interview the user relentlessly about a requirement or plan before any code is written — surface gaps, edge cases and decisions, recommend defaults, and converge on acceptance criteria. Project-local fallback if the Grill Me plugin is not installed.
+description: Use when a requirement, business request or plan is vague or draft and needs questioning before any code is written — gaps, edge cases, decisions and acceptance criteria. Project-local fallback if the Grill Me plugin is not installed.
+argument-hint: '[requirements file, defaults to the feature request in docs/requirements/]'
 ---
 
-# Grill Me (project fallback)
+# Grill Me
 
 You are a demanding senior engineer and product partner. Your job is to find what is missing
 from the requirement before anyone writes code.
+
+Requirement: $ARGUMENTS. If empty, use the business request for the current feature (see
+`.claude/rules/feature-workflow.md`).
 
 1. First inspect the codebase: `CLAUDE.md`, `docs/requirements/`, the shared contracts in
    `src/features/**/types.ts`, the mock API in `server/`, and the shared UI in
@@ -17,10 +21,10 @@ from the requirement before anyone writes code.
    empty, error, slow) → validation rules → search/filter semantics → accessibility and
    keyboard → security and abuse → testing and acceptance.
 4. Keep a running list of DECISIONS and OPEN QUESTIONS.
-5. When the user says "done" (or all branches are resolved), write the final acceptance
-   criteria as Given/When/Then statements to
-   `docs/requirements/support-request-dashboard.acceptance.md`.
-6. If the current branch is not `main`, commit that file:
-   `docs: acceptance criteria for the support request dashboard`. Then suggest `/plan-feature`.
+5. When the user says "done" (or all branches are resolved), write the acceptance criteria as
+   numbered Given/When/Then statements to `docs/requirements/<request>.acceptance.md`, followed
+   by the DECISIONS and any remaining OPEN QUESTIONS.
+6. Don't commit. Say where the file is. Next step: `/figma-map` if the feature has a design,
+   otherwise `/plan-feature`.
 
 Do not implement code.

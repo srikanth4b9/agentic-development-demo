@@ -1,6 +1,6 @@
 ---
 name: evidence-review
-description: Evidence-based code review of an implementation against requirements, architecture and coding standards, ranked by severity. Use when asked to review code, a feature, a branch or changes before a PR.
+description: Use when asked to review code, a feature, a branch or the current changes before a PR — a read-only review against requirements, architecture and standards, ranked by severity.
 argument-hint: '[path or feature, defaults to current changes]'
 context: fork
 agent: code-reviewer

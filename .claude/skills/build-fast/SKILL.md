@@ -1,6 +1,6 @@
 ---
 name: build-fast
-description: Demo fast path for the build step — bring in the dashboard code built from the same plan in rehearsal (branch demo/complete), verify it and commit it. Typed only.
+description: Use when demoing and there's no time for the full live build — brings in the Support Request Dashboard code from the rehearsal branch demo/complete. Demo only. Typed only.
 disable-model-invocation: true
 ---
 
@@ -29,6 +29,9 @@ Run `npm run check` (typecheck, lint, unit tests). If anything fails, stop and r
 not fix it silently.
 
 ## 4. Commit
+
+Also stage any uncommitted feature docs (`docs/requirements/`, `docs/plans/`, `docs/design/`),
+then:
 
 ```bash
 git commit -m "feat(support-requests): dashboard built from the approved plan (rehearsal run)"
